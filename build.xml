@@ -99,6 +99,8 @@
     	   <fileset dir="lib">
     	   		<exclude name="**/jogl-java-src.zip"/>
     	   		<exclude name="**/gluegen-java-src.zip"/>    	   	
+    	   		<exclude name="**/*.7z"/>	   	
+    	   		<exclude name="**/*.zip"/>	   	
     		</fileset>
     	</copy>
     

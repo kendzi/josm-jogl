@@ -27,7 +27,7 @@ import org.openstreetmap.josm.plugins.PluginInformation;
 /**
  * This class registering JOGL libraries in JOSM classLoader.
  * 
- * @author Tomasz Kêdziora (Kendzi)
+ * @author Tomasz KÄ™dziora (Kendzi)
  */
 public class JoglPlugin extends Plugin {
 
@@ -87,21 +87,26 @@ public class JoglPlugin extends Plugin {
     }
 
     private List<String> getJoglLibs() {
+
         return Arrays.asList(
-                "/lib/jogl-2.0-b57-20120502/jogl-all-natives-linux-amd64.jar",
-                "/lib/jogl-2.0-b57-20120502/jogl-all-natives-linux-i586.jar",
-                "/lib/jogl-2.0-b57-20120502/jogl-all-natives-macosx-universal.jar",
-                "/lib/jogl-2.0-b57-20120502/jogl-all-natives-windows-amd64.jar",
-                "/lib/jogl-2.0-b57-20120502/jogl-all-natives-windows-i586.jar",
-                "/lib/jogl-2.0-b57-20120502/jogl.all.jar",
+                "/lib/jogl-v2.0-rc11/jogl-all-natives-linux-amd64.jar",
+                "/lib/jogl-v2.0-rc11/jogl-all-natives-linux-i586.jar",
+                "/lib/jogl-v2.0-rc11/jogl-all-natives-macosx-universal.jar",
+                "/lib/jogl-v2.0-rc11/jogl-all-natives-solaris-amd64.jar",
+                "/lib/jogl-v2.0-rc11/jogl-all-natives-solaris-i586.jar",
+                "/lib/jogl-v2.0-rc11/jogl-all-natives-windows-amd64.jar",
+                "/lib/jogl-v2.0-rc11/jogl-all-natives-windows-i586.jar",
+                "/lib/jogl-v2.0-rc11/jogl-all.jar",
 
-                "/lib/jogl-2.0-b57-20120502/gluegen-rt-natives-linux-amd64.jar",
-                "/lib/jogl-2.0-b57-20120502/gluegen-rt-natives-linux-i586.jar",
-                "/lib/jogl-2.0-b57-20120502/gluegen-rt-natives-macosx-universal.jar",
-                "/lib/jogl-2.0-b57-20120502/gluegen-rt-natives-windows-amd64.jar",
-                "/lib/jogl-2.0-b57-20120502/gluegen-rt-natives-windows-i586.jar",
-
-                "/lib/jogl-2.0-b57-20120502/gluegen-rt.jar");
+                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-linux-amd64.jar",
+                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-linux-i586.jar",
+                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-macosx-universal.jar",
+                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-solaris-amd64.jar",
+                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-solaris-i586.jar",
+                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-windows-amd64.jar",
+                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-windows-i586.jar",
+                "/lib/jogl-v2.0-rc11/gluegen-rt.jar"
+                );
     }
 
     /**
@@ -118,8 +123,6 @@ public class JoglPlugin extends Plugin {
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, MalformedURLException {
 
-        // URLClassLoader sysLoader = (URLClassLoader)
-        // ClassLoader.getSystemClassLoader();
         URLClassLoader sysLoader = (URLClassLoader) Main.class.getClassLoader();
 
         // try to load jars and dll
@@ -128,17 +131,8 @@ public class JoglPlugin extends Plugin {
                 new Class[] { URL.class });
         method.setAccessible(true);
 
-        File library = new File(getPluginDir() + "/");
-        //        if (library.exists()) {
-        //            System.out.println("loading lib: " + library.getAbsoluteFile());
-        //        } else {
-        //            System.err.println("lib don't exist!: " + library.getAbsoluteFile());
-        //        }
-        // XXX this line breaks class loader on linux !
-        // method.invoke(sysLoader, new Object[] { library.toURI().toURL() });
-
         for (int i = 0; i < pLiblaryNamesList.size(); i++) {
-            library = new File(getPluginDir() + "/" + pLiblaryNamesList.get(i));
+            File library = new File(getPluginDir() + "/" + pLiblaryNamesList.get(i));
             if (library.exists()) {
                 System.out.println("loading lib: " + library.getAbsoluteFile());
             } else {
@@ -242,17 +236,6 @@ public class JoglPlugin extends Plugin {
             in.close();
             out.close();
             status +="end of copying bytes: " + l + " from file: " + from + " at url: " + fromUrl;
-
-            //            System.out.println(this.getClass().getResource(""));
-            //            System.out.println(this.getClass().getResource("/"));
-
-            //        } catch (java.lang.NullPointerException e) {
-            //            // for debbuging and testing I don't care.
-            //            e.printStackTrace();
-            //
-            //        } catch (Exception e) {
-            //            // for debbuging and testing I don't care.
-            //            e.printStackTrace();
 
         } finally {
             System.out.println(status);
