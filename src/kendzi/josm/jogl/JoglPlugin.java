@@ -89,23 +89,23 @@ public class JoglPlugin extends Plugin {
     private List<String> getJoglLibs() {
 
         return Arrays.asList(
-                "/lib/jogl-v2.0-rc11/jogl-all-natives-linux-amd64.jar",
-                "/lib/jogl-v2.0-rc11/jogl-all-natives-linux-i586.jar",
-                "/lib/jogl-v2.0-rc11/jogl-all-natives-macosx-universal.jar",
-                "/lib/jogl-v2.0-rc11/jogl-all-natives-solaris-amd64.jar",
-                "/lib/jogl-v2.0-rc11/jogl-all-natives-solaris-i586.jar",
-                "/lib/jogl-v2.0-rc11/jogl-all-natives-windows-amd64.jar",
-                "/lib/jogl-v2.0-rc11/jogl-all-natives-windows-i586.jar",
-                "/lib/jogl-v2.0-rc11/jogl-all.jar",
+                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-linux-amd64.jar",
+                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-linux-i586.jar",
+                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-macosx-universal.jar",
+                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-solaris-amd64.jar",
+                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-solaris-i586.jar",
+                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-windows-amd64.jar",
+                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-windows-i586.jar",
+                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12.jar",
 
-                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-linux-amd64.jar",
-                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-linux-i586.jar",
-                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-macosx-universal.jar",
-                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-solaris-amd64.jar",
-                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-solaris-i586.jar",
-                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-windows-amd64.jar",
-                "/lib/jogl-v2.0-rc11/gluegen-rt-natives-windows-i586.jar",
-                "/lib/jogl-v2.0-rc11/gluegen-rt.jar"
+                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-linux-amd64.jar",
+                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-linux-i586.jar",
+                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-macosx-universal.jar",
+                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-solaris-amd64.jar",
+                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-solaris-i586.jar",
+                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-windows-amd64.jar",
+                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-windows-i586.jar",
+                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12.jar"
                 );
     }
 
