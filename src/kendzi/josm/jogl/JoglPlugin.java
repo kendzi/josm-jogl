@@ -32,6 +32,11 @@ import org.openstreetmap.josm.plugins.PluginInformation;
 public class JoglPlugin extends Plugin {
 
     /**
+     * Jogl libraries directory.
+     */
+    private static final String JOGL_LIB_DIR = "/lib/jogl-2.1.3/";
+
+    /**
      * Jogl loader instance.
      */
     private static JoglPlugin joglPlugin;
@@ -59,13 +64,13 @@ public class JoglPlugin extends Plugin {
     }
 
     /** Setup instance.
-     * @param pJoglPlugin
+     * @param joglPlugin
      */
-    private static void setInstance(JoglPlugin pJoglPlugin) {
-        if (joglPlugin != null) {
+    private static void setInstance(JoglPlugin joglPlugin) {
+        if (JoglPlugin.joglPlugin != null) {
             throw new RuntimeException("this plugin is liblary and it can be loaded only once!");
         }
-        joglPlugin = pJoglPlugin;
+        JoglPlugin.joglPlugin = joglPlugin;
     }
 
     /** Constructor.
@@ -89,23 +94,23 @@ public class JoglPlugin extends Plugin {
     private List<String> getJoglLibs() {
 
         return Arrays.asList(
-                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-linux-amd64.jar",
-                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-linux-i586.jar",
-                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-macosx-universal.jar",
-                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-solaris-amd64.jar",
-                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-solaris-i586.jar",
-                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-windows-amd64.jar",
-                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12-natives-windows-i586.jar",
-                "/lib/jogl-2.0.2-rc12/jogl-all-2.0.2-rc12.jar",
+                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-linux-amd64.jar",
+                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-linux-i586.jar",
+                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-macosx-universal.jar",
+                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-solaris-amd64.jar",
+                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-solaris-i586.jar",
+                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-windows-amd64.jar",
+                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-windows-i586.jar",
+                JOGL_LIB_DIR + "jogl-all-2.1.3.jar",
 
-                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-linux-amd64.jar",
-                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-linux-i586.jar",
-                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-macosx-universal.jar",
-                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-solaris-amd64.jar",
-                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-solaris-i586.jar",
-                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-windows-amd64.jar",
-                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12-natives-windows-i586.jar",
-                "/lib/jogl-2.0.2-rc12/gluegen-rt-2.0.2-rc12.jar"
+                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-linux-amd64.jar",
+                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-linux-i586.jar",
+                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-macosx-universal.jar",
+                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-solaris-amd64.jar",
+                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-solaris-i586.jar",
+                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-windows-amd64.jar",
+                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-windows-i586.jar",
+                JOGL_LIB_DIR + "gluegen-rt-2.1.3.jar"
                 );
     }
 

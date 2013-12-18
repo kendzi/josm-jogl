@@ -161,7 +161,8 @@
     -->
     <target name="revision">
  
-    	
+    	<echo>Build number!!!</echo>
+    	<delete file="build.number.last"/>
     	<copy file="build.number" tofile="build.number.last"/>
     	
     	<buildnumber/>
@@ -239,7 +240,59 @@
     </target>
 
    
-    
+	 <target name="publish_osm.zibi" depends="">
+	    	<!-- publish-local-ftp-dir -->
+	 		<property name="zibi.host" value="zibi.openstreetmap.org.pl" />
+
+	 		<property file="/bin/osm.zibi.properties"/>
+	   
+	    	<property file="build.number.last"/>
+	    	
+	    	<property name="plugin_version.jar" value="${plugin.dist.dir}/${ant.project.name}_v${build.number}.jar" />
+	    		  
+	    	<echo>${plugin_version.jar}</echo>
+	 		<echo>${osm.zibi.username}</echo>
+	    	<!-- <echo>${osm.vxm.password}</echo> -->
+	    	<echo>"${plugin.dist.dir}/${ant.project.name}_v${build.number}/${plugin.jar}"</echo>
+	    	
+	    	
+	    	<ftp server="${zibi.host}"
+	    	      
+		        remotedir="/Kendzi3d/snapshot-jogl/current"
+		        userid="${osm.zibi.username}"
+		        password="${osm.zibi.password}"
+		        passive="yes"
+		        depends="yes"
+		        binary="yes"
+	    		verbose="yes"
+	    		chmod="755"
+	    	>
+	    		<fileset file="${plugin.dist.dir}/${ant.project.name}_v${build.number}/${ant.project.name}.jar" />    	
+	    	</ftp>
+	    	
+	    	<ftp action="mkdir"
+    	       	server="${zibi.host}"
+    	       	userid="${osm.zibi.username}"
+    	       	password="${osm.zibi.password}"
+    	       	remotedir="/Kendzi3d/snapshot-jogl/${build.number}"
+				chmod="755"
+	    	/>
+	    	
+	    	<ftp server="${zibi.host}"
+	    	    	      
+		        remotedir="/Kendzi3d/snapshot-jogl/${build.number}"
+		        userid="${osm.zibi.username}"
+		        password="${osm.zibi.password}"
+		        passive="yes"
+		        depends="yes"
+		        binary="yes"
+	    		verbose="yes"
+	    		chmod="755"
+	    	>
+	    		<fileset file="${plugin.dist.dir}/${ant.project.name}_v${build.number}/${ant.project.name}.jar" /> 
+	    	</ftp>
+	    	
+	    </target>
 	
 	
     <target name="publish_osm.vxm.pl" depends="">
