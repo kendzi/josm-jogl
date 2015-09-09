@@ -1,10 +1,7 @@
 /*
- * This software is provided "AS IS" without a warranty of any kind.
- * You use it on your own risk and responsibility!!!
- *
- * This file is shared under BSD v3 license.
- * See readme.txt and BSD3 file for details.
- *
+ * This software is provided "AS IS" without a warranty of any kind. You use it
+ * on your own risk and responsibility!!! This file is shared under BSD v3
+ * license. See readme.txt and BSD3 file for details.
  */
 package kendzi.josm.jogl;
 
@@ -26,7 +23,7 @@ import org.openstreetmap.josm.plugins.PluginInformation;
 
 /**
  * This class registering JOGL libraries in JOSM classLoader.
- * 
+ *
  * @author Tomasz Kędziora (Kendzi)
  */
 public class JoglPlugin extends Plugin {
@@ -34,7 +31,7 @@ public class JoglPlugin extends Plugin {
     /**
      * Jogl libraries directory.
      */
-    private static final String JOGL_LIB_DIR = "/lib/jogl-2.1.3/";
+    private static final String JOGL_LIB_DIR = "/lib/jogl-2.3.1/";
 
     /**
      * Jogl loader instance.
@@ -53,7 +50,8 @@ public class JoglPlugin extends Plugin {
     }
 
     /**
-     * Get Jogl loader instance. Instance is setup after plugin is loaded.
+     * Get Jogl loader instance. Instance is setup after plug-in is loaded.
+     *
      * @return jogl loader
      */
     private static JoglPlugin getInstance() {
@@ -63,7 +61,9 @@ public class JoglPlugin extends Plugin {
         return joglPlugin;
     }
 
-    /** Setup instance.
+    /**
+     * Setup instance.
+     *
      * @param joglPlugin
      */
     private static void setInstance(JoglPlugin joglPlugin) {
@@ -73,8 +73,11 @@ public class JoglPlugin extends Plugin {
         JoglPlugin.joglPlugin = joglPlugin;
     }
 
-    /** Constructor.
-     * @param info plug-in info
+    /**
+     * Constructor.
+     *
+     * @param info
+     *            plug-in info
      */
     public JoglPlugin(PluginInformation info) {
         super(info);
@@ -82,7 +85,8 @@ public class JoglPlugin extends Plugin {
         setInstance(this);
     }
 
-    private void addLiblaryToClassPath() throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    private void addLiblaryToClassPath()
+            throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         List<String> liblaryNamesList = getJoglLibs();
 
@@ -93,47 +97,53 @@ public class JoglPlugin extends Plugin {
 
     private List<String> getJoglLibs() {
 
-        return Arrays.asList(
-                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-linux-amd64.jar",
-                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-linux-i586.jar",
-                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-macosx-universal.jar",
-                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-solaris-amd64.jar",
-                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-solaris-i586.jar",
-                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-windows-amd64.jar",
-                JOGL_LIB_DIR + "jogl-all-2.1.3-natives-windows-i586.jar",
-                JOGL_LIB_DIR + "jogl-all-2.1.3.jar",
-
-                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-linux-amd64.jar",
-                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-linux-i586.jar",
-                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-macosx-universal.jar",
-                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-solaris-amd64.jar",
-                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-solaris-i586.jar",
-                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-windows-amd64.jar",
-                JOGL_LIB_DIR + "gluegen-rt-2.1.3-natives-windows-i586.jar",
-                JOGL_LIB_DIR + "gluegen-rt-2.1.3.jar"
-                );
+        return Arrays.asList( //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-linux-armv6.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-linux-armv6hf.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-linux-amd64.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-linux-i586.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-macosx-universal.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-solaris-amd64.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-solaris-i586.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-windows-amd64.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-windows-i586.jar", //
+                JOGL_LIB_DIR + "jogl-all-2.3.1.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-linux-armv6.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-linux-armv6hf.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-linux-amd64.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-linux-i586.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-macosx-universal.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-solaris-amd64.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-solaris-i586.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-windows-amd64.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-windows-i586.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-2.3.1.jar"//
+        );
     }
 
     /**
      * Registering external jars to ClassLoader.
      *
-     * @param pLiblaryNamesList list of jars
+     * @param pLiblaryNamesList
+     *            list of jars
      *
-     * @throws NoSuchMethodException ups
-     * @throws IllegalAccessException ups
-     * @throws InvocationTargetException ups
-     * @throws MalformedURLException ups
+     * @throws NoSuchMethodException
+     *             ups
+     * @throws IllegalAccessException
+     *             ups
+     * @throws InvocationTargetException
+     *             ups
+     * @throws MalformedURLException
+     *             ups
      */
     private void addJarsToClassLoader(List<String> pLiblaryNamesList)
-            throws NoSuchMethodException, IllegalAccessException,
-            InvocationTargetException, MalformedURLException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, MalformedURLException {
 
         URLClassLoader sysLoader = (URLClassLoader) Main.class.getClassLoader();
 
         // try to load jars and dll
         Class<URLClassLoader> sysclass = URLClassLoader.class;
-        Method method = sysclass.getDeclaredMethod("addURL",
-                new Class[] { URL.class });
+        Method method = sysclass.getDeclaredMethod("addURL", new Class[] { URL.class });
         method.setAccessible(true);
 
         for (int i = 0; i < pLiblaryNamesList.size(); i++) {
@@ -147,10 +157,14 @@ public class JoglPlugin extends Plugin {
         }
     }
 
-    /** Coping file list from jar to plugin dir.
-     * @param pFilesPathList list of files path in jar
+    /**
+     * Coping file list from jar to plug-in directory.
      *
-     * @throws IOException ups
+     * @param pFilesPathList
+     *            list of files path in jar
+     *
+     * @throws IOException
+     *             ups
      */
     private void copyFilesFromJar(List<String> pFilesPathList) throws IOException {
 
@@ -159,10 +173,11 @@ public class JoglPlugin extends Plugin {
         }
     }
 
-
     /**
      * Make all sub directories.
-     * @param to file which require directory
+     *
+     * @param to
+     *            file which require directory
      */
     private void makeParentDirs(String to) {
         File parentDir = getParentDir(to);
@@ -171,16 +186,23 @@ public class JoglPlugin extends Plugin {
         }
     }
 
-    public URL getResourceUrl(String pResName) {
+    /**
+     * Gets resource url.
+     *
+     * @param resourceName
+     *            the resource name
+     * @return the url
+     */
+    private URL getResourceUrl(String resourceName) {
 
-        if (pResName != null) {
-            pResName = pResName.trim();
-            if (pResName.startsWith("/")) {
-                pResName = pResName.substring(1);
+        if (resourceName != null) {
+            resourceName = resourceName.trim();
+            if (resourceName.startsWith("/")) {
+                resourceName = resourceName.substring(1);
             }
         }
 
-        return getPluginResourceClassLoader().getResource(pResName);
+        return getPluginResourceClassLoader().getResource(resourceName);
     }
 
     private File getParentDir(String from) {
@@ -188,16 +210,18 @@ public class JoglPlugin extends Plugin {
     }
 
     /**
-     * Check if file exist in plugin directory.
-     * @param pFileName file path
+     * Check if file exist in plug-in directory.
+     *
+     * @param pFileName
+     *            file path
      * @return if file exist
      */
-    public boolean isFileExis(String pFileName) {
+    private boolean isFileExis(String pFileName) {
         File file = new File(getPluginDir(), pFileName);
         return file.exists() && file.length() != 0;
     }
 
-    public void copy(String from, boolean skipIfExist) throws IOException {
+    private void copy(String from, boolean skipIfExist) throws IOException {
         String status = "";
 
         try {
@@ -211,7 +235,6 @@ public class JoglPlugin extends Plugin {
             status += "starting copying file from jar to plugin dir " + from + "\n";
 
             makeParentDirs(to);
-
 
             URL fromUrl = getResourceUrl(from);
             if (fromUrl == null) {
@@ -240,7 +263,7 @@ public class JoglPlugin extends Plugin {
 
             in.close();
             out.close();
-            status +="end of copying bytes: " + l + " from file: " + from + " at url: " + fromUrl;
+            status += "end of copying bytes: " + l + " from file: " + from + " at url: " + fromUrl;
 
         } finally {
             System.out.println(status);
