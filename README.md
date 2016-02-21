@@ -1,4 +1,4 @@
-kendzi3d-josm-jogl
+josm-jogl
 ==================
 
 Provides the JOGL (OpenGl) library for other JOSM plugins.

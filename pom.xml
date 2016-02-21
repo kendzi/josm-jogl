@@ -6,10 +6,18 @@
 	<version>1.0.42-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<url>https://github.com/kendzi/kendzi3d-josm-jogl</url>
+	<url>https://github.com/kendzi/josm-jogl</url>
 	<properties>
 		<jogl.version>2.3.1</jogl.version>
 	</properties>
+
+	<scm>
+		<connection>scm:git:git@github.com/kendzi/josm-jogl.git</connection>
+		<developerConnection>scm:git:git@github.com:kendzi/josm-jogl.git</developerConnection>
+		<url>http://github.com/kendzi/josm-jogl</url>
+		<tag>HEAD</tag>
+	</scm>
+
 	<distributionManagement>
 		<repository>
 			<id>zibi-ftp-repository</id>
@@ -78,7 +86,7 @@
 								JOSM plugins. Not meant to be installed directly by users, but
 								rather as a dependency for other plugins.</Plugin-Description>
 							<Plugin-Icon>images/GL.png</Plugin-Icon>
-							<Plugin-Link>https://github.com/kendzi/kendzi3d-josm-jogl</Plugin-Link>
+							<Plugin-Link>https://github.com/kendzi/josm-jogl</Plugin-Link>
 							<Plugin-Stage>5</Plugin-Stage>
 							<Plugin-Mainversion>8931</Plugin-Mainversion>
 							<Plugin-Version>${project.version}</Plugin-Version>
