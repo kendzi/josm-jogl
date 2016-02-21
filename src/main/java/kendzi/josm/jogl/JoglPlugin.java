@@ -14,8 +14,10 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.plugins.Plugin;
@@ -31,12 +33,14 @@ public class JoglPlugin extends Plugin {
     /**
      * Jogl libraries directory.
      */
-    private static final String JOGL_LIB_DIR = "/lib/jogl-2.3.1/";
+    private static final String JOGL_LIB_DIR = "/lib/${joglVersion}/";
 
     /**
      * Jogl loader instance.
      */
     private static JoglPlugin joglPlugin;
+
+    private String joglVersion;
 
     /**
      * Add JOGL libraries to JOSM classpath.
@@ -68,9 +72,28 @@ public class JoglPlugin extends Plugin {
      */
     private static void setInstance(JoglPlugin joglPlugin) {
         if (JoglPlugin.joglPlugin != null) {
-            throw new RuntimeException("this plugin is liblary and it can be loaded only once!");
+            throw new RuntimeException("this plugin is library and it can be loaded only once!");
         }
         JoglPlugin.joglPlugin = joglPlugin;
+        joglPlugin.loadJoglVersion();
+    }
+
+    private void loadJoglVersion() {
+        Properties prop = new Properties();
+        try {
+            InputStream in = getClass().getResourceAsStream("josm-jogl.properties");
+            prop.load(in);
+            in.close();
+
+            joglVersion = prop.getProperty("jogl.version");
+
+            if (joglVersion == null) {
+                throw new IllegalStateException("can't load jogl version from properties file");
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("can't load jogl version!");
+        }
+
     }
 
     /**
@@ -97,28 +120,34 @@ public class JoglPlugin extends Plugin {
 
     private List<String> getJoglLibs() {
 
-        return Arrays.asList( //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-linux-armv6.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-linux-armv6hf.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-linux-amd64.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-linux-i586.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-macosx-universal.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-solaris-amd64.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-solaris-i586.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-windows-amd64.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1-natives-windows-i586.jar", //
-                JOGL_LIB_DIR + "jogl-all-2.3.1.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-linux-armv6.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-linux-armv6hf.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-linux-amd64.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-linux-i586.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-macosx-universal.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-solaris-amd64.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-solaris-i586.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-windows-amd64.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1-natives-windows-i586.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-2.3.1.jar"//
+        List<String> list = Arrays.asList( //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-linux-armv6.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-linux-armv6hf.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-linux-amd64.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-linux-i586.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-macosx-universal.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-solaris-amd64.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-solaris-i586.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-windows-amd64.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-windows-i586.jar", //
+                JOGL_LIB_DIR + "jogl-all-${joglVersion}.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-linux-armv6.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-linux-armv6hf.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-linux-amd64.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-linux-i586.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-macosx-universal.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-solaris-amd64.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-solaris-i586.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-windows-amd64.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-windows-i586.jar", //
+                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}.jar"//
         );
+
+        List<String> ret = new ArrayList<String>();
+        for (String string : list) {
+            ret.add(string.replaceAll("${joglVersion}", joglVersion));
+        }
+        return ret;
     }
 
     /**

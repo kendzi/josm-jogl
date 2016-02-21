@@ -1,0 +1,126 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>kendzi.kendzi3d</groupId>
+	<artifactId>josm-jogl-lib</artifactId>
+	<version>1.0.42-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<url>https://github.com/kendzi/kendzi3d-josm-jogl</url>
+	<properties>
+		<jogl.version>2.3.1</jogl.version>
+	</properties>
+	<distributionManagement>
+		<repository>
+			<id>zibi-ftp-repository</id>
+			<url>ftp://kendzi@zibi.openstreetmap.org.pl/k/repo</url>
+		</repository>
+	</distributionManagement>
+	<dependencies>
+		<dependency>
+			<!-- artifact from jsom repository -->
+			<groupId>org.openstreetmap.josm</groupId>
+			<artifactId>josm</artifactId>
+			<version>SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jogamp.gluegen</groupId>
+			<artifactId>gluegen-rt-main</artifactId>
+			<version>${jogl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jogamp.jogl</groupId>
+			<artifactId>jogl-all-main</artifactId>
+			<version>${jogl.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<extensions>
+			<!-- Enabling the use of FTP -->
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>2.5</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifest>
+						</manifest>
+
+						<manifestEntries>
+							<Author>Tomasz Kędziora (kendzi)</Author>
+							<Plugin-Class>kendzi.josm.jogl.JoglPlugin</Plugin-Class>
+							<Plugin-Date />
+							<Plugin-Description>Provides the JOGL (OpenGl) library for other
+								JOSM plugins. Not meant to be installed directly by users, but
+								rather as a dependency for other plugins.</Plugin-Description>
+							<Plugin-Icon>images/GL.png</Plugin-Icon>
+							<Plugin-Link>https://github.com/kendzi/kendzi3d-josm-jogl</Plugin-Link>
+							<Plugin-Stage>5</Plugin-Stage>
+							<Plugin-Mainversion>8931</Plugin-Mainversion>
+							<Plugin-Version>${project.version}</Plugin-Version>
+							<Plugin-Requires></Plugin-Requires>
+							<url>${project.url}</url>
+						</manifestEntries>
+					</archive>
+					<descriptor>src/main/assembly/dep.xml</descriptor>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>josm_repo</id>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>ignore</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<url>https://josm.openstreetmap.de/nexus/content/repositories/public/</url>
+		</repository>
+		<repository>
+			<id>repo_remote</id>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>ignore</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<url>http://zibi.openstreetmap.org.pl/kendzi/k/repo/</url>
+		</repository>
+	</repositories>
+</project>
