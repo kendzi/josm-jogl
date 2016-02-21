@@ -26,7 +26,7 @@
 			<unpack>true</unpack> 
 			<scope>runtime</scope>
 			<includes>
-				<include>kendzi.kendzi3d:josm-jogl-lib*</include>
+				<include>kendzi.kendzi3d:josm-jogl*</include>
 			</includes>
 		</dependencySet>
 
