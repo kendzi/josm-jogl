@@ -82,9 +82,7 @@
 							<Author>Tomasz Kędziora (kendzi)</Author>
 							<Plugin-Class>kendzi.josm.jogl.JoglPlugin</Plugin-Class>
 							<Plugin-Date />
-							<Plugin-Description>Provides the JOGL (OpenGl) library for other
-								JOSM plugins. Not meant to be installed directly by users, but
-								rather as a dependency for other plugins.</Plugin-Description>
+							<Plugin-Description>Provides the JOGL (OpenGl) library for other JOSM plugins. Not meant to be installed directly by users, but rather as a dependency for other plugins.</Plugin-Description>
 							<Plugin-Icon>images/GL.png</Plugin-Icon>
 							<Plugin-Link>https://github.com/kendzi/josm-jogl</Plugin-Link>
 							<Plugin-Stage>5</Plugin-Stage>
