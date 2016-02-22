@@ -33,7 +33,7 @@ public class JoglPlugin extends Plugin {
     /**
      * Jogl libraries directory.
      */
-    private static final String JOGL_LIB_DIR = "/lib/${joglVersion}/";
+    private static final String JOGL_LIB_DIR = "/lib/jogl-${joglVersion}/";
 
     /**
      * Jogl loader instance.
@@ -81,7 +81,7 @@ public class JoglPlugin extends Plugin {
     private void loadJoglVersion() {
         Properties prop = new Properties();
         try {
-            InputStream in = getClass().getResourceAsStream("josm-jogl.properties");
+            InputStream in = getClass().getResourceAsStream("/josm-jogl.properties");
             prop.load(in);
             in.close();
 
@@ -120,32 +120,32 @@ public class JoglPlugin extends Plugin {
 
     private List<String> getJoglLibs() {
 
-        List<String> list = Arrays.asList( //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-linux-armv6.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-linux-armv6hf.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-linux-amd64.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-linux-i586.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-macosx-universal.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-solaris-amd64.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-solaris-i586.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-windows-amd64.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}-natives-windows-i586.jar", //
-                JOGL_LIB_DIR + "jogl-all-${joglVersion}.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-linux-armv6.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-linux-armv6hf.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-linux-amd64.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-linux-i586.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-macosx-universal.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-solaris-amd64.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-solaris-i586.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-windows-amd64.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}-natives-windows-i586.jar", //
-                JOGL_LIB_DIR + "gluegen-rt-${joglVersion}.jar"//
+        List<String> libNames = Arrays.asList( //
+                "jogl-all-${joglVersion}-natives-linux-armv6.jar", //
+                "jogl-all-${joglVersion}-natives-linux-armv6hf.jar", //
+                "jogl-all-${joglVersion}-natives-linux-amd64.jar", //
+                "jogl-all-${joglVersion}-natives-linux-i586.jar", //
+                "jogl-all-${joglVersion}-natives-macosx-universal.jar", //
+                "jogl-all-${joglVersion}-natives-solaris-amd64.jar", //
+                "jogl-all-${joglVersion}-natives-solaris-i586.jar", //
+                "jogl-all-${joglVersion}-natives-windows-amd64.jar", //
+                "jogl-all-${joglVersion}-natives-windows-i586.jar", //
+                "jogl-all-${joglVersion}.jar", //
+                "gluegen-rt-${joglVersion}-natives-linux-armv6.jar", //
+                "gluegen-rt-${joglVersion}-natives-linux-armv6hf.jar", //
+                "gluegen-rt-${joglVersion}-natives-linux-amd64.jar", //
+                "gluegen-rt-${joglVersion}-natives-linux-i586.jar", //
+                "gluegen-rt-${joglVersion}-natives-macosx-universal.jar", //
+                "gluegen-rt-${joglVersion}-natives-solaris-amd64.jar", //
+                "gluegen-rt-${joglVersion}-natives-solaris-i586.jar", //
+                "gluegen-rt-${joglVersion}-natives-windows-amd64.jar", //
+                "gluegen-rt-${joglVersion}-natives-windows-i586.jar", //
+                "gluegen-rt-${joglVersion}.jar"//
         );
 
         List<String> ret = new ArrayList<String>();
-        for (String string : list) {
-            ret.add(string.replaceAll("${joglVersion}", joglVersion));
+        for (String libName : libNames) {
+            ret.add((JOGL_LIB_DIR + libName).replaceAll("\\$\\{joglVersion\\}", joglVersion));
         }
         return ret;
     }
