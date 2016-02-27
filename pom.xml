@@ -7,7 +7,7 @@
 
 	<url>https://github.com/kendzi/josm-jogl</url>
 	<properties>
-		<jogl.version>2.3.1</jogl.version>
+		<jogl.version>2.3.2</jogl.version>
 	</properties>
 
 	<scm>
