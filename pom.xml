@@ -8,6 +8,8 @@
 	<url>https://github.com/kendzi/josm-jogl</url>
 	<properties>
 		<jogl.version>2.3.2</jogl.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<scm>
@@ -25,7 +27,7 @@
 	</distributionManagement>
 	<dependencies>
 		<dependency>
-			<!-- artifact from jsom repository -->
+			<!-- artifact from josm repository -->
 			<groupId>org.openstreetmap.josm</groupId>
 			<artifactId>josm</artifactId>
 			<version>SNAPSHOT</version>
@@ -85,7 +87,7 @@
 							<Plugin-Icon>images/GL.png</Plugin-Icon>
 							<Plugin-Link>https://github.com/kendzi/josm-jogl</Plugin-Link>
 							<Plugin-Stage>5</Plugin-Stage>
-							<Plugin-Mainversion>8931</Plugin-Mainversion>
+							<Plugin-Mainversion>10223</Plugin-Mainversion>
 							<Plugin-Version>${project.version}</Plugin-Version>
 							<Plugin-Requires />
 							<url>${project.url}</url>

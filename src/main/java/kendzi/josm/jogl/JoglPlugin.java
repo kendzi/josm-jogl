@@ -18,10 +18,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.plugins.Plugin;
 import org.openstreetmap.josm.plugins.PluginInformation;
+import org.openstreetmap.josm.tools.JosmRuntimeException;
+import org.openstreetmap.josm.tools.PlatformHookUnixoid;
+import org.openstreetmap.josm.tools.Utils;
 
 /**
  * This class registering JOGL libraries in JOSM classLoader.
@@ -47,7 +52,7 @@ public class JoglPlugin extends Plugin {
      */
     public static void addJoglToClassPath() {
         try {
-            getInstance().addLiblaryToClassPath();
+            getInstance().addLibraryToClassPath();
         } catch (Exception e) {
             throw new RuntimeException("can't add jogl libs to classpath", e);
         }
@@ -108,8 +113,9 @@ public class JoglPlugin extends Plugin {
         setInstance(this);
     }
 
-    private void addLiblaryToClassPath()
-            throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    private void addLibraryToClassPath()
+            throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+            SecurityException, ClassNotFoundException {
 
         List<String> liblaryNamesList = getJoglLibs();
 
@@ -145,7 +151,13 @@ public class JoglPlugin extends Plugin {
 
         List<String> ret = new ArrayList<String>();
         for (String libName : libNames) {
-            ret.add((JOGL_LIB_DIR + libName).replaceAll("\\$\\{joglVersion\\}", joglVersion));
+            if (!libName.contains("natives")
+                    || (Main.isPlatformWindows() && libName.contains("windows"))
+                    || (Main.isPlatformOsx() && libName.contains("macosx"))
+                    || (Main.platform instanceof PlatformHookUnixoid
+                            && (libName.contains("linux") || libName.contains("solaris")))) {
+                ret.add((JOGL_LIB_DIR + libName).replaceAll("\\$\\{joglVersion\\}", joglVersion));
+            }
         }
         return ret;
     }
@@ -153,7 +165,7 @@ public class JoglPlugin extends Plugin {
     /**
      * Registering external jars to ClassLoader.
      *
-     * @param pLiblaryNamesList
+     * @param pLibraryNamesList
      *            list of jars
      *
      * @throws NoSuchMethodException
@@ -164,25 +176,50 @@ public class JoglPlugin extends Plugin {
      *             ups
      * @throws MalformedURLException
      *             ups
+     * @throws ClassNotFoundException
+     *             ups
+     * @throws SecurityException
+     *             ups
      */
-    private void addJarsToClassLoader(List<String> pLiblaryNamesList)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, MalformedURLException {
+    private void addJarsToClassLoader(List<String> pLibraryNamesList)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, MalformedURLException,
+            SecurityException, ClassNotFoundException {
 
-        URLClassLoader sysLoader = (URLClassLoader) Main.class.getClassLoader();
+        ClassLoader sysLoader = Main.class.getClassLoader();
 
         // try to load jars and dll
-        Class<URLClassLoader> sysclass = URLClassLoader.class;
-        Method method = sysclass.getDeclaredMethod("addURL", new Class[] { URL.class });
-        method.setAccessible(true);
+        if (sysLoader instanceof URLClassLoader) {
+            // Up to Java 8 the system class loader is an instance of java.net.URLClassLoader
+            doAddJarsToClassLoader(pLibraryNamesList, sysLoader,
+                    URLClassLoader.class.getDeclaredMethod("addURL", URL.class),
+                        f -> {
+                            try {
+                                return f.toURI().toURL();
+                            } catch (MalformedURLException e) {
+                                throw new JosmRuntimeException(e);
+                            }
+                        });
+        } else if (sysLoader != null) {
+            // Starting from Java 9 the system class loader is an instance of jdk.internal.ClassLoaders.AppClassLoader
+            doAddJarsToClassLoader(pLibraryNamesList, sysLoader,
+                    Class.forName("jdk.internal.loader.ClassLoaders$AppClassLoader")
+                        .getDeclaredMethod("appendToClassPathForInstrumentation", String.class),
+                        f -> f.getAbsolutePath());
+        }
+    }
 
-        for (int i = 0; i < pLiblaryNamesList.size(); i++) {
-            File library = new File(getPluginDir() + "/" + pLiblaryNamesList.get(i));
+    private void doAddJarsToClassLoader(List<String> pLibraryNamesList, ClassLoader pSysLoader, Method pMethod,
+            Function<File, Object> pArgBuilder)
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, MalformedURLException {
+        Utils.setObjectsAccessible(pMethod);
+        for (String libName : pLibraryNamesList) {
+            File library = new File(getPluginDir(), libName);
             if (library.exists()) {
                 System.out.println("loading lib: " + library.getAbsoluteFile());
             } else {
                 System.err.println("lib don't exist!: " + library.getAbsoluteFile());
             }
-            method.invoke(sysLoader, new Object[] { library.toURI().toURL() });
+            pMethod.invoke(pSysLoader, pArgBuilder.apply(library));
         }
     }
 
