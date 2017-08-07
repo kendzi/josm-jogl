@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kendzi.kendzi3d</groupId>
 	<artifactId>josm-jogl</artifactId>
-	<version>1.0.47-SNAPSHOT</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 
 	<url>https://github.com/kendzi/josm-jogl</url>
@@ -16,7 +16,7 @@
 		<connection>scm:git:git@github.com/kendzi/josm-jogl.git</connection>
 		<developerConnection>scm:git:git@github.com:kendzi/josm-jogl.git</developerConnection>
 		<url>http://github.com/kendzi/josm-jogl</url>
-		<tag>HEAD</tag>
+		<tag>josm-jogl-1.1.0</tag>
 	</scm>
 
 	<distributionManagement>
