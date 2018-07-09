@@ -223,7 +223,11 @@ public class JoglPlugin extends Plugin {
         }
     }
 
-    /**
+    private String getPluginDir() {
+		return getPluginDirs().getUserDataDirectory(false).getPath();
+	}
+
+	/**
      * Coping file list from jar to plug-in directory.
      *
      * @param pFilesPathList
