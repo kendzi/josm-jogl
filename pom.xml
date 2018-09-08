@@ -10,6 +10,7 @@
 		<jogl.version>2.3.2</jogl.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<scm>
@@ -93,7 +94,9 @@
 							<url>${project.url}</url>
 						</manifestEntries>
 					</archive>
-					<descriptor>src/main/assembly/dep.xml</descriptor>
+					<descriptors>
+						<descriptor>src/main/assembly/dep.xml</descriptor>
+					</descriptors>
 				</configuration>
 				<executions>
 					<execution>
