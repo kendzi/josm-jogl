@@ -18,14 +18,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.plugins.Plugin;
+import org.openstreetmap.josm.plugins.PluginHandler;
 import org.openstreetmap.josm.plugins.PluginInformation;
 import org.openstreetmap.josm.tools.JosmRuntimeException;
-import org.openstreetmap.josm.tools.PlatformHookUnixoid;
+import org.openstreetmap.josm.tools.Logging;
+import org.openstreetmap.josm.tools.PlatformManager;
 import org.openstreetmap.josm.tools.Utils;
 
 /**
@@ -54,7 +54,7 @@ public class JoglPlugin extends Plugin {
         try {
             getInstance().addLibraryToClassPath();
         } catch (Exception e) {
-            throw new RuntimeException("can't add jogl libs to classpath", e);
+            throw new JosmRuntimeException("can't add jogl libs to classpath", e);
         }
     }
 
@@ -65,7 +65,7 @@ public class JoglPlugin extends Plugin {
      */
     private static JoglPlugin getInstance() {
         if (joglPlugin == null) {
-            throw new RuntimeException("Plugin JoglPlugin has not been started yet");
+            throw new JosmRuntimeException("Plugin JoglPlugin has not been started yet");
         }
         return joglPlugin;
     }
@@ -77,7 +77,7 @@ public class JoglPlugin extends Plugin {
      */
     private static void setInstance(JoglPlugin joglPlugin) {
         if (JoglPlugin.joglPlugin != null) {
-            throw new RuntimeException("this plugin is library and it can be loaded only once!");
+            throw new JosmRuntimeException("this plugin is library and it can be loaded only once!");
         }
         JoglPlugin.joglPlugin = joglPlugin;
         joglPlugin.loadJoglVersion();
@@ -115,7 +115,7 @@ public class JoglPlugin extends Plugin {
 
     private void addLibraryToClassPath()
             throws IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException,
-            SecurityException, ClassNotFoundException {
+            ClassNotFoundException {
 
         List<String> liblaryNamesList = getJoglLibs();
 
@@ -149,12 +149,12 @@ public class JoglPlugin extends Plugin {
                 "gluegen-rt-${joglVersion}.jar"//
         );
 
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
         for (String libName : libNames) {
             if (!libName.contains("natives")
-                    || (Main.isPlatformWindows() && libName.contains("windows"))
-                    || (Main.isPlatformOsx() && libName.contains("macosx"))
-                    || (Main.platform instanceof PlatformHookUnixoid
+                    || (PlatformManager.isPlatformWindows() && libName.contains("windows"))
+                    || (PlatformManager.isPlatformOsx() && libName.contains("macosx"))
+                    || (PlatformManager.isPlatformUnixoid()
                             && (libName.contains("linux") || libName.contains("solaris")))) {
                 ret.add((JOGL_LIB_DIR + libName).replaceAll("\\$\\{joglVersion\\}", joglVersion));
             }
@@ -182,10 +182,10 @@ public class JoglPlugin extends Plugin {
      *             ups
      */
     private void addJarsToClassLoader(List<String> pLibraryNamesList)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, MalformedURLException,
-            SecurityException, ClassNotFoundException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+            ClassNotFoundException {
 
-        ClassLoader sysLoader = Main.class.getClassLoader();
+        ClassLoader sysLoader = PluginHandler.class.getClassLoader();
 
         // try to load jars and dll
         if (sysLoader instanceof URLClassLoader) {
@@ -204,20 +204,20 @@ public class JoglPlugin extends Plugin {
             doAddJarsToClassLoader(pLibraryNamesList, sysLoader,
                     Class.forName("jdk.internal.loader.ClassLoaders$AppClassLoader")
                         .getDeclaredMethod("appendToClassPathForInstrumentation", String.class),
-                        f -> f.getAbsolutePath());
+                        File::getAbsolutePath);
         }
     }
 
     private void doAddJarsToClassLoader(List<String> pLibraryNamesList, ClassLoader pSysLoader, Method pMethod,
             Function<File, Object> pArgBuilder)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, MalformedURLException {
+            throws IllegalAccessException, InvocationTargetException {
         Utils.setObjectsAccessible(pMethod);
         for (String libName : pLibraryNamesList) {
             File library = new File(getPluginDir(), libName);
             if (library.exists()) {
-                System.out.println("loading lib: " + library.getAbsoluteFile());
+                Logging.info("loading lib: " + library.getAbsoluteFile());
             } else {
-                System.err.println("lib don't exist!: " + library.getAbsoluteFile());
+                Logging.error("lib don't exist!: " + library.getAbsoluteFile());
             }
             pMethod.invoke(pSysLoader, pArgBuilder.apply(library));
         }
@@ -336,7 +336,7 @@ public class JoglPlugin extends Plugin {
             status += "end of copying bytes: " + l + " from file: " + from + " at url: " + fromUrl;
 
         } finally {
-            System.out.println(status);
+            Logging.info(status);
         }
     }
 }
