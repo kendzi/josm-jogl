@@ -6,11 +6,11 @@
 	<formats>
 		<format>jar</format>
 	</formats>
-	<baseDirectory>/</baseDirectory>
+	<baseDirectory/>
 	<fileSets>
 		<fileSet>
 			<directory>${project.basedir}</directory>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory/>
 			<includes>
 				<include>README*</include>
 				<include>LICENSE*</include>
@@ -21,7 +21,7 @@
 	
 	<dependencySets>
 		<dependencySet>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory/>
 			<useProjectArtifact>true</useProjectArtifact>
 			<unpack>true</unpack> 
 			<scope>runtime</scope>
@@ -31,7 +31,7 @@
 		</dependencySet>
 
 		<dependencySet>
-			<outputDirectory>/lib/jogl-${jogl.version}</outputDirectory>
+			<outputDirectory>lib/jogl-${jogl.version}</outputDirectory>
 			<useProjectArtifact>false</useProjectArtifact>
 			<unpack>false</unpack>
 			<scope>runtime</scope>

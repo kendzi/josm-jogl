@@ -10,6 +10,7 @@
 		<jogl.version>2.3.2</jogl.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<scm>
@@ -59,20 +60,20 @@
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
-				<version>2.5</version>
+				<version>3.1.0</version>
 			</extension>
 		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
+				<version>3.1.0</version>
 				<configuration>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4</version>
+				<version>3.1.0</version>
 				<configuration>
 					<archive>
 						<index>true</index>
@@ -87,13 +88,15 @@
 							<Plugin-Icon>images/GL.png</Plugin-Icon>
 							<Plugin-Link>https://github.com/kendzi/josm-jogl</Plugin-Link>
 							<Plugin-Stage>5</Plugin-Stage>
-							<Plugin-Mainversion>14026</Plugin-Mainversion>
+							<Plugin-Mainversion>14138</Plugin-Mainversion>
 							<Plugin-Version>${project.version}</Plugin-Version>
 							<Plugin-Requires />
 							<url>${project.url}</url>
 						</manifestEntries>
 					</archive>
-					<descriptor>src/main/assembly/dep.xml</descriptor>
+					<descriptors>
+						<descriptor>src/main/assembly/dep.xml</descriptor>
+					</descriptors>
 				</configuration>
 				<executions>
 					<execution>
@@ -107,7 +110,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>2.5.3</version>
 				<!-- version greater 2.4.2 to fix ugly bug with release of git projects -->
 			</plugin>
 		</plugins>
