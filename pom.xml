@@ -88,7 +88,7 @@
 							<Plugin-Icon>images/GL.png</Plugin-Icon>
 							<Plugin-Link>https://github.com/kendzi/josm-jogl</Plugin-Link>
 							<Plugin-Stage>5</Plugin-Stage>
-							<Plugin-Mainversion>14138</Plugin-Mainversion>
+							<Plugin-Mainversion>14977</Plugin-Mainversion>
 							<Plugin-Version>${project.version}</Plugin-Version>
 							<Plugin-Requires />
 							<url>${project.url}</url>

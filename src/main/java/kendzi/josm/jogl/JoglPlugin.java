@@ -26,7 +26,7 @@ import org.openstreetmap.josm.plugins.PluginInformation;
 import org.openstreetmap.josm.tools.JosmRuntimeException;
 import org.openstreetmap.josm.tools.Logging;
 import org.openstreetmap.josm.tools.PlatformManager;
-import org.openstreetmap.josm.tools.Utils;
+import org.openstreetmap.josm.tools.ReflectionUtils;
 
 /**
  * This class registering JOGL libraries in JOSM classLoader.
@@ -211,7 +211,7 @@ public class JoglPlugin extends Plugin {
     private void doAddJarsToClassLoader(List<String> pLibraryNamesList, ClassLoader pSysLoader, Method pMethod,
             Function<File, Object> pArgBuilder)
             throws IllegalAccessException, InvocationTargetException {
-        Utils.setObjectsAccessible(pMethod);
+        ReflectionUtils.setObjectsAccessible(pMethod);
         for (String libName : pLibraryNamesList) {
             File library = new File(getPluginDir(), libName);
             if (library.exists()) {
